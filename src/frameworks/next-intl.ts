@@ -35,18 +35,18 @@ class NextIntlFramework extends Framework {
   ]
 
   usageMatchRegex = [
-    // Match: t, tSpecific, tFoo (capture the full variable name to use in scope detection)
+    // Match: useT, myT, fooT (capture the full variable name to use in scope detection)
     // Basic usage
-    '[^\\w\\d](t(?:[A-Z]\\w*)?)\\s*\\(\\s*[\'"`]({key})[\'"`]',
+    '[^\\w\\d](\\w*T)\\s*\\(\\s*[\'"`]({key})[\'"`]',
 
     // Rich text
-    '[^\\w\\d](t(?:[A-Z]\\w*)?)\\s*\\.rich\\s*\\(\\s*[\'"`]({key})[\'"`]',
+    '[^\\w\\d](\\w*T)\\s*\\.rich\\s*\\(\\s*[\'"`]({key})[\'"`]',
 
     // Markup text
-    '[^\\w\\d](t(?:[A-Z]\\w*)?)\\s*\\.markup\\s*\\(\\s*[\'"`]({key})[\'"`]',
+    '[^\\w\\d](\\w*T)\\s*\\.markup\\s*\\(\\s*[\'"`]({key})[\'"`]',
 
     // Raw text
-    '[^\\w\\d](t(?:[A-Z]\\w*)?)\\s*\\.raw\\s*\\(\\s*[\'"`]({key})[\'"`]',
+    '[^\\w\\d](\\w*T)\\s*\\.raw\\s*\\(\\s*[\'"`]({key})[\'"`]',
   ]
 
   refactorTemplates(keypath: string) {
@@ -94,7 +94,7 @@ class NextIntlFramework extends Framework {
     // Find matches of `useTranslations` and `getTranslations` and extracts the variable names.
     // If there are multiple occurrences in the same file, there will be multiple, overlapping scopes.
     // During resolution, the variable name will be used to determine which scope the key belongs to, allowing multiple namespaces in the same file.
-    const regex = /(?:const|let|var)\s+(t(?:[A-Z]\w*)?)\s*=\s*(?:await\s+)?(useTranslations|getTranslations)\s*\(\s*['"`](.*?)['"`]\)/g
+    const regex = /(?:const|let|var)\s+(\w*T)\s*=\s*(?:await\s+)?(useTranslations|getTranslations)\s*\(\s*['"`](.*?)['"`]\)/g
 
     for (const match of text.matchAll(regex)) {
       if (typeof match.index !== 'number')
